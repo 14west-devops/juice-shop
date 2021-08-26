@@ -230,6 +230,24 @@ const serveIndexMiddleware = (req, res, next) => {
   next()
 }
 
+const setCacheMiddleware = function (req, res, next) {
+  // here you can define period in second, this one is 5 minutes
+  const period = 60 * 5 
+
+  // you only want to cache for GET requests
+  if (req.method == 'GET') {
+    res.set('Cache-control', `public, max-age=${period}`)
+  } else {
+    // for the other requests set strict no caching parameters
+    res.set('Cache-control', `no-store`)
+  }
+
+  // remember to call next() to pass on the request
+  next()
+}
+
+app.use(setCacheMiddleware)
+
 /* /ftp directory browsing and file download */
 app.use('/ftp', serveIndexMiddleware, serveIndex('ftp', { icons: true }))
 app.use('/ftp(?!/quarantine)/:file', fileServer())
@@ -247,7 +265,15 @@ app.use('/support/logs/:file', logFileServer())
 /* Swagger documentation for B2B v2 endpoints */
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 
-app.use(express.static(path.join(__dirname, '/frontend/dist/frontend')))
+app.use(
+  express.static(path.join(__dirname, '/frontend/dist/frontend'), {
+    magAge: 31557600,
+    extensions: ["jpg", "png"],
+    cacheControl: true,
+    immutable: true
+  })
+)
+
 app.use(cookieParser('kekse'))
 
 /* Configure and enable backend-side i18n */
