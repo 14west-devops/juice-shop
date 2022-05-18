@@ -4,6 +4,7 @@ WORKDIR /juice-shop
 RUN npm install --production --unsafe-perm
 RUN npm dedupe
 RUN rm -rf frontend/node_modules
+RUN npm rebuild
 
 FROM quay.io/14west/node:12-alpine
 ARG BUILD_DATE
