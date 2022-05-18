@@ -232,14 +232,14 @@ const serveIndexMiddleware = (req, res, next) => {
 
 const setCacheMiddleware = function (req, res, next) {
   // here you can define period in second, this one is 5 minutes
-  const period = 60 * 5 
+  const period = 60 * 5
 
   // you only want to cache for GET requests
   if (req.method === 'GET') {
     res.set('Cache-control', `public, max-age=${period}`)
   } else {
     // for the other requests set strict no caching parameters
-    res.set('Cache-control', `no-store`)
+    res.set('Cache-control', 'no-store')
   }
 
   // remember to call next() to pass on the request
@@ -268,7 +268,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument))
 app.use(
   express.static(path.join(__dirname, '/frontend/dist/frontend'), {
     magAge: 31557600,
-    extensions: ["jpg", "png"],
+    extensions: ['jpg', 'png'],
     cacheControl: true,
     immutable: false
   })
