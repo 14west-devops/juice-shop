@@ -235,7 +235,7 @@ const setCacheMiddleware = function (req, res, next) {
   const period = 60 * 5 
 
   // you only want to cache for GET requests
-  if (req.method == 'GET') {
+  if (req.method === 'GET') {
     res.set('Cache-control', `public, max-age=${period}`)
   } else {
     // for the other requests set strict no caching parameters
@@ -270,7 +270,7 @@ app.use(
     magAge: 31557600,
     extensions: ["jpg", "png"],
     cacheControl: true,
-    immutable: true
+    immutable: false
   })
 )
 
