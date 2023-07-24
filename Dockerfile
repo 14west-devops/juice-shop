@@ -1,4 +1,4 @@
-FROM quay.io/14west/node:12 as installer
+FROM quay.io/14west/node:18 as installer
 COPY . /juice-shop
 WORKDIR /juice-shop
 RUN npm i -g typescript ts-node
@@ -7,7 +7,7 @@ RUN npm dedupe
 RUN rm -rf frontend/node_modules
 RUN npm rebuild
 
-FROM quay.io/14west/node:12-alpine
+FROM quay.io/14west/node:18-alpine
 ARG BUILD_DATE
 ARG VCS_REF
 LABEL maintainer="Bjoern Kimminich <bjoern.kimminich@owasp.org>" \
