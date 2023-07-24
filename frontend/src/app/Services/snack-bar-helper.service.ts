@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2021 Bjoern Kimminich.
+ * Copyright (c) 2014-2023 Bjoern Kimminich & the OWASP Juice Shop contributors.
  * SPDX-License-Identifier: MIT
  */
 
@@ -9,7 +9,7 @@ import { TranslateService } from '@ngx-translate/core'
 
 @Injectable({
   providedIn: 'root'
-})
+  })
 export class SnackBarHelperService {
   constructor (private readonly translateService: TranslateService,
     private readonly snackBar: MatSnackBar) { }

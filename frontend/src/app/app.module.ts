@@ -1,12 +1,12 @@
 /*
- * Copyright (c) 2014-2021 Bjoern Kimminich.
+ * Copyright (c) 2014-2023 Bjoern Kimminich & the OWASP Juice Shop contributors.
  * SPDX-License-Identifier: MIT
  */
 
 import { BrowserModule } from '@angular/platform-browser'
-import { NgModule } from '@angular/core'
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core'
 import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http'
-import { CookieService } from 'ngx-cookie-service'
+import { CookieModule, CookieService } from 'ngx-cookie'
 import { ReactiveFormsModule } from '@angular/forms'
 import { Routing } from './app.routing'
 import { OverlayContainer } from '@angular/cdk/overlay'
@@ -30,7 +30,6 @@ import { SearchResultComponent } from './search-result/search-result.component'
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component'
 import { RegisterComponent } from './register/register.component'
 import { ContactComponent } from './contact/contact.component'
-import { ErasureRequestComponent } from './erasure-request/erasure-request.component'
 import { ChangePasswordComponent } from './change-password/change-password.component'
 import { ProductDetailsComponent } from './product-details/product-details.component'
 import { ComplaintComponent } from './complaint/complaint.component'
@@ -40,7 +39,9 @@ import { RecycleComponent } from './recycle/recycle.component'
 import { QrCodeComponent } from './qr-code/qr-code.component'
 import { UserDetailsComponent } from './user-details/user-details.component'
 import { ServerStartedNotificationComponent } from './server-started-notification/server-started-notification.component'
-import { ChallengeSolvedNotificationComponent } from './challenge-solved-notification/challenge-solved-notification.component'
+import {
+  ChallengeSolvedNotificationComponent
+} from './challenge-solved-notification/challenge-solved-notification.component'
 import { OAuthComponent } from './oauth/oauth.component'
 import { TokenSaleComponent } from './token-sale/token-sale.component'
 import { ProductReviewEditComponent } from './product-review-edit/product-review-edit.component'
@@ -98,6 +99,7 @@ import { MatGridListModule } from '@angular/material/grid-list'
 import { MatSnackBarModule } from '@angular/material/snack-bar'
 import { MatRadioModule } from '@angular/material/radio'
 import { MatBadgeModule } from '@angular/material/badge'
+import { HighlightModule, HIGHLIGHT_OPTIONS } from 'ngx-highlightjs'
 import { TwoFactorAuthComponent } from './two-factor-auth/two-factor-auth.component'
 import { DataExportComponent } from './data-export/data-export.component'
 import { LastLoginIpComponent } from './last-login-ip/last-login-ip.component'
@@ -129,7 +131,12 @@ import { MatPasswordStrengthModule } from '@angular-material-extensions/password
 import { MatSlideToggleModule } from '@angular/material/slide-toggle'
 import { FeedbackDetailsComponent } from './feedback-details/feedback-details.component'
 import { MatSliderModule } from '@angular/material/slider'
+import { MatTabsModule } from '@angular/material/tabs'
 import { MatChipsModule } from '@angular/material/chips'
+import { CodeSnippetComponent } from './code-snippet/code-snippet.component'
+import { CodeAreaComponent } from './code-area/code-area.component'
+import { NgxTextDiffModule } from 'ngx-text-diff'
+import { CodeFixesComponent } from './code-fixes/code-fixes.component'
 
 export function HttpLoaderFactory (http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json')
@@ -150,7 +157,6 @@ export function HttpLoaderFactory (http: HttpClient) {
     ForgotPasswordComponent,
     RegisterComponent,
     ContactComponent,
-    ErasureRequestComponent,
     ChangePasswordComponent,
     ProductDetailsComponent,
     ComplaintComponent,
@@ -190,7 +196,10 @@ export function HttpLoaderFactory (http: HttpClient) {
     DeliveryMethodComponent,
     PhotoWallComponent,
     DeluxeUserComponent,
-    FeedbackDetailsComponent
+    FeedbackDetailsComponent,
+    CodeSnippetComponent,
+    CodeAreaComponent,
+    CodeFixesComponent
   ],
   imports: [
     BrowserModule,
@@ -204,6 +213,7 @@ export function HttpLoaderFactory (http: HttpClient) {
         }
       }
     ),
+    CookieModule.forRoot(),
     MatPasswordStrengthModule.forRoot(),
     FlexLayoutModule,
     HttpClientModule,
@@ -242,14 +252,30 @@ export function HttpLoaderFactory (http: HttpClient) {
     MatRadioModule,
     MatSnackBarModule,
     MatSliderModule,
+    MatTabsModule,
     MatSlideToggleModule,
-    MatChipsModule
+    MatChipsModule,
+    NgxTextDiffModule,
+    HighlightModule
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   providers: [
     {
       provide: HTTP_INTERCEPTORS,
       useClass: RequestInterceptor,
       multi: true
+    },
+    {
+      provide: HIGHLIGHT_OPTIONS,
+      useValue: {
+        coreLibraryLoader: async () => await import('highlight.js/lib/core'),
+        lineNumbersLoader: async () => await import('highlightjs-line-numbers.js'),
+        languages: {
+          typescript: async () => await import('highlight.js/lib/languages/typescript'),
+          javascript: async () => await import('highlight.js/lib/languages/javascript'),
+          yaml: async () => await import('highlight.js/lib/languages/yaml')
+        }
+      }
     },
     ProductService,
     ConfigurationService,

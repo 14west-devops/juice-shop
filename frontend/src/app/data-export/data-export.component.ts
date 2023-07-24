@@ -1,10 +1,10 @@
 /*
- * Copyright (c) 2014-2021 Bjoern Kimminich.
+ * Copyright (c) 2014-2023 Bjoern Kimminich & the OWASP Juice Shop contributors.
  * SPDX-License-Identifier: MIT
  */
 
 import { Component, OnInit } from '@angular/core'
-import { FormControl, Validators } from '@angular/forms'
+import { UntypedFormControl, Validators } from '@angular/forms'
 import { ImageCaptchaService } from '../Services/image-captcha.service'
 import { DataSubjectService } from '../Services/data-subject.service'
 import { DomSanitizer } from '@angular/platform-browser'
@@ -13,10 +13,10 @@ import { DomSanitizer } from '@angular/platform-browser'
   selector: 'app-data-export',
   templateUrl: './data-export.component.html',
   styleUrls: ['./data-export.component.scss']
-})
+  })
 export class DataExportComponent implements OnInit {
-  public captchaControl: FormControl = new FormControl('', [Validators.required, Validators.minLength(5)])
-  public formatControl: FormControl = new FormControl('', [Validators.required])
+  public captchaControl: UntypedFormControl = new UntypedFormControl('', [Validators.required, Validators.minLength(5)])
+  public formatControl: UntypedFormControl = new UntypedFormControl('', [Validators.required])
   public captcha: any
   private dataRequest: any = undefined
   public confirmation: any

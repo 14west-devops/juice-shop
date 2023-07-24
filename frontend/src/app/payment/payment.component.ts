@@ -1,9 +1,9 @@
 /*
- * Copyright (c) 2014-2021 Bjoern Kimminich.
+ * Copyright (c) 2014-2023 Bjoern Kimminich & the OWASP Juice Shop contributors.
  * SPDX-License-Identifier: MIT
  */
 
-import { FormControl, Validators } from '@angular/forms'
+import { UntypedFormControl, Validators } from '@angular/forms'
 import { Component, NgZone, OnInit } from '@angular/core'
 import { ConfigurationService } from '../Services/configuration.service'
 import { BasketService } from '../Services/basket.service'
@@ -18,7 +18,8 @@ import {
   faStickyNote,
   faThumbsUp,
   faTimes,
-  faTshirt
+  faTshirt,
+  faPalette
 } from '@fortawesome/free-solid-svg-icons'
 import { faLeanpub, faStripe } from '@fortawesome/free-brands-svg-icons'
 import { QrCodeComponent } from '../qr-code/qr-code.component'
@@ -27,18 +28,18 @@ import { ActivatedRoute, ParamMap, Router } from '@angular/router'
 import { WalletService } from '../Services/wallet.service'
 import { DeliveryService } from '../Services/delivery.service'
 import { UserService } from '../Services/user.service'
-import { CookieService } from 'ngx-cookie-service'
+import { CookieService } from 'ngx-cookie'
 import { Location } from '@angular/common'
 import { SnackBarHelperService } from '../Services/snack-bar-helper.service'
 
-library.add(faCartArrowDown, faGift, faHeart, faLeanpub, faThumbsUp, faTshirt, faStickyNote, faHandHoldingUsd, faCoffee, faTimes, faStripe)
+library.add(faCartArrowDown, faGift, faHeart, faLeanpub, faThumbsUp, faTshirt, faStickyNote, faHandHoldingUsd, faCoffee, faTimes, faStripe, faPalette)
 dom.watch()
 
 @Component({
   selector: 'app-payment',
   templateUrl: './payment.component.html',
   styleUrls: ['./payment.component.scss']
-})
+  })
 export class PaymentComponent implements OnInit {
   public couponConfirmation: any
   public couponError: any
@@ -47,7 +48,7 @@ export class PaymentComponent implements OnInit {
   public facebookUrl = null
   public applicationName = 'OWASP Juice Shop'
   private campaignCoupon: string
-  public couponControl: FormControl = new FormControl('', [Validators.required, Validators.minLength(10), Validators.maxLength(10)])
+  public couponControl: UntypedFormControl = new UntypedFormControl('', [Validators.required, Validators.minLength(10), Validators.maxLength(10)])
   public clientDate: any
   public paymentId: any = undefined
   public couponPanelExpanded: boolean = false
@@ -188,7 +189,7 @@ export class PaymentComponent implements OnInit {
     } else if (this.mode === 'deluxe') {
       this.userService.upgradeToDeluxe(this.paymentMode, this.paymentId).subscribe((data) => {
         localStorage.setItem('token', data.token)
-        this.cookieService.set('token', data.token)
+        this.cookieService.put('token', data.token)
         this.ngZone.run(async () => await this.router.navigate(['/deluxe-membership']))
       }, (err) => console.log(err))
     } else {

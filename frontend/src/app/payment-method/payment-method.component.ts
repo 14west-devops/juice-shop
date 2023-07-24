@@ -1,9 +1,9 @@
 /*
- * Copyright (c) 2014-2021 Bjoern Kimminich.
+ * Copyright (c) 2014-2023 Bjoern Kimminich & the OWASP Juice Shop contributors.
  * SPDX-License-Identifier: MIT
  */
 
-import { FormControl, Validators } from '@angular/forms'
+import { UntypedFormControl, Validators } from '@angular/forms'
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core'
 import { PaymentService } from '../Services/payment.service'
 import { MatTableDataSource } from '@angular/material/table'
@@ -20,16 +20,16 @@ dom.watch()
   selector: 'app-payment-method',
   templateUrl: './payment-method.component.html',
   styleUrls: ['./payment-method.component.scss']
-})
+  })
 
 export class PaymentMethodComponent implements OnInit {
   @Output() emitSelection = new EventEmitter()
   @Input('allowDelete') public allowDelete: boolean = false
   public displayedColumns = ['Number', 'Name', 'Expiry']
-  public nameControl: FormControl = new FormControl('', [Validators.required])
-  public numberControl: FormControl = new FormControl('', [Validators.required, Validators.min(1000000000000000), Validators.max(9999999999999999)])
-  public monthControl: FormControl = new FormControl('', [Validators.required])
-  public yearControl: FormControl = new FormControl('', [Validators.required])
+  public nameControl: UntypedFormControl = new UntypedFormControl('', [Validators.required])
+  public numberControl: UntypedFormControl = new UntypedFormControl('', [Validators.required, Validators.min(1000000000000000), Validators.max(9999999999999999)]) // eslint-disable-line no-loss-of-precision
+  public monthControl: UntypedFormControl = new UntypedFormControl('', [Validators.required])
+  public yearControl: UntypedFormControl = new UntypedFormControl('', [Validators.required])
   public confirmation: any
   public error: any
   public storedCards: any

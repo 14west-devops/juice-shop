@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2021 Bjoern Kimminich.
+ * Copyright (c) 2014-2023 Bjoern Kimminich & the OWASP Juice Shop contributors.
  * SPDX-License-Identifier: MIT
  */
 
@@ -10,7 +10,7 @@ import { catchError, map } from 'rxjs/operators'
 
 @Injectable({
   providedIn: 'root'
-})
+  })
 export class ProductReviewService {
   private readonly hostServer = environment.hostServer
   private readonly host = this.hostServer + '/rest/products'
@@ -19,7 +19,7 @@ export class ProductReviewService {
 
   get (id: number) {
     return this.http.get(`${this.host}/${id}/reviews`).pipe(
-      map((response: any) => response.data), catchError(err => {
+      map((response: any) => response.data), catchError((err: Error) => {
         throw err
       })
     )

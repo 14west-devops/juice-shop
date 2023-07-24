@@ -50,6 +50,8 @@ application:
       type: string
     pressKitUrl:
       type: string
+    nftUrl:
+      type: string
     questionnaireUrl:
       type: string
   recyclePage:
@@ -88,6 +90,8 @@ application:
       type: string
     acknowledgements:
       type: string
+    hiring:
+      type: string
   promotion:
     video:
       type: string
@@ -102,8 +106,7 @@ application:
     clientId:
       type: string
     authorizedRedirects:
-      -
-        uri:
+      - uri:
           type: string
         proxy:
           type: string
@@ -114,6 +117,8 @@ challenges:
     type: boolean
   showMitigations:
     type: boolean
+  codingChallengesEnabled:
+    type: string
   restrictToTutorialsFirst:
     type: boolean
   overwriteUrlForProductTamperingChallenge:
@@ -122,14 +127,17 @@ challenges:
     type: string
   safetyOverride:
     type: boolean
+  showFeedbackButtons:
+    type: boolean
 hackingInstructor:
   isEnabled:
     type: boolean
   avatarImage:
     type: string
+  hintPlaybackSpeed:
+    type: string
 products:
-  -
-    name:
+  - name:
       type: string
     price:
       type: number
@@ -153,15 +161,15 @@ products:
       - type: string
     fileForRetrieveBlueprintChallenge:
       type: string
+    exifForBlueprintChallenge:
+      - type: string
     reviews:
-      -
-        text:
+      - text:
           type: string
         author:
           type: string
 memories:
-  -
-    image:
+  - image:
       type: string
     caption:
       type: string
@@ -372,11 +380,6 @@ ctf:
       code:
         type: string
     oauthUserPasswordChallenge:
-      name:
-        type: string
-      code:
-        type: string
-    loginCisoChallenge:
       name:
         type: string
       code:
@@ -677,6 +680,21 @@ ctf:
       code:
         type: string
     bullyChatbotChallenge:
+      name:
+        type: string
+      code:
+        type: string
+    lfrChallenge:
+      name:
+        type: string
+      code:
+        type: string
+    closeNotificationsChallenge:
+      name:
+        type: string
+      code:
+        type: string
+    emptyUserRegistration:
       name:
         type: string
       code:

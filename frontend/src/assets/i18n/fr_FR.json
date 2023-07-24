@@ -315,7 +315,7 @@
   "IMAGE_UPLOAD_SUCCESS": "Votre image a été transférée avec succès.",
   "EMPTY_MEMORY_LIST": "Aucun souvenir n'a encore été partagé.",
   "LABEL_DELUXE_MEMBERSHIP": "Adhésion Deluxe",
-  "DESCRIPTION_DELUXE_MEMBERSHIP": "Profitez d'avantages incroyables en tant que client de luxe de {{appname}}. Découvrez ce qui est inclus dans votre adhésion.",
+  "DESCRIPTION_DELUXE_MEMBERSHIP": "Profitez d'incroyables avantages en tant que client de luxe de {{appname}}. Découvrez ce qui est inclus dans votre adhésion.",
   "LABEL_BECOME_MEMBER": "Devenir membre",
   "LABEL_DEALS_OFFERS": "Deals et Offres",
   "DESCRIPTION_DEALS_OFFERS": "En tant que membre de luxe, vous avez accès à des offres exclusives et irrésistibles.",
@@ -362,7 +362,7 @@
   "TAG_PREREQUISITE": "Pré-requis",
   "TAG_PREREQUISITE_DESCRIPTION": "Marque les défis qui doivent être résolus avant qu'un ou plusieurs autres défis puissent être (réalistement) résolus.",
   "TAG_OSINT": "OSINT",
-  "TAG_OSINT_DESCRIPTION": "Marque les défis qui requièrent une certaine recherche sur Internet ou de \"harcèlement social\" en dehors de l'application.",
+  "TAG_OSINT_DESCRIPTION": "Marks challenges which require some Internet research or \"social stalking\" activity outside the application.",
   "TAG_CONTRAPTION": "Bidule",
   "TAG_CONTRAPTION_DESCRIPTION": "Indique qu'un défi ne fait pas exactement partie d'un scénario réaliste, mais peut être un peu forcé ou fabriqué.",
   "TAG_SHENANIGANS": "Shenanigans",
@@ -405,5 +405,14 @@
   "CATEGORY_VULNERABLE_COMPONENTS_DESCRIPTION": "Les composants, tels que les bibliothèques, les frameworks et d'autres modules , s'exécutent avec les mêmes privilèges que l'application. Si un composant vulnérable est exploité, une telle attaque peut faciliter la perte de données ou la prise de contrôle du serveur. Les applications et les API utilisant des composants avec des vulnérabilités connues peuvent miner les défenses des applications et permettre diverses attaques et impacts.",
   "CATEGORY_XSS_DESCRIPTION": "Des failles Cross-Site Scripting (XSS) surviennent chaque fois qu'une application inclut des données non fiables dans une nouvelle page Web sans validation ni échappement appropriés, ou met à jour une page Web existante avec des données fournies par l'utilisateur en utilisant une API de navigateur qui peut créer du HTML ou du JavaScript. XSS permet à des attaquants d'exécuter des scripts dans le navigateur de la victime qui peuvent détourner les sessions d'utilisateur, détourner les sites Web ou rediriger l'utilisateur vers des sites malveillants.",
   "CATEGORY_XXE_DESCRIPTION": "De nombreux processeurs XML anciens ou mal configurés évaluent les références d'entités externes dans les documents XML. Les entités externes peuvent être utilisées pour divulguer des fichiers internes en utilisant le gestionnaire de fichier URI, partage de fichiers internes, analyse de ports internes, exécution de code à distance et attaques par déni de service.",
-  "INSUFFICIENT_WALLET_BALANCE": "Solde du portefeuille insuffisant."
+  "INSUFFICIENT_WALLET_BALANCE": "Solde du portefeuille insuffisant.",
+  "LAUNCH_CODING_CHALLENGE": "Lancer le défi de codage associé.",
+  "LOADING_CODE_SNIPPET": "Chargement du fragment de code...",
+  "SOLVE_HACKING_CHALLENGE": "Résolvez le défi de piratage pour débloquer le défi de codage associé.",
+  "LABEL_CORRECT_FIX": "Correction",
+  "TITLE_CODING_CHALLENGE": "Challenge de codage",
+  "TAB_FIND_IT": "Trouvez-le!",
+  "TAB_FIX_IT": "Réparez-le !",
+  "TITLE_CODING_SCORE": "Score de codage",
+  "LABEL_FEEDBACK": "Commentaires"
 }

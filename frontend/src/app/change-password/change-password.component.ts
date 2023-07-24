@@ -1,9 +1,9 @@
 /*
- * Copyright (c) 2014-2021 Bjoern Kimminich.
+ * Copyright (c) 2014-2023 Bjoern Kimminich & the OWASP Juice Shop contributors.
  * SPDX-License-Identifier: MIT
  */
 
-import { AbstractControl, FormControl, Validators } from '@angular/forms'
+import { AbstractControl, UntypedFormControl, Validators } from '@angular/forms'
 import { UserService } from '../Services/user.service'
 import { Component } from '@angular/core'
 import { dom, library } from '@fortawesome/fontawesome-svg-core'
@@ -19,11 +19,11 @@ dom.watch()
   selector: 'app-change-password',
   templateUrl: './change-password.component.html',
   styleUrls: ['./change-password.component.scss']
-})
+  })
 export class ChangePasswordComponent {
-  public passwordControl: FormControl = new FormControl('', [Validators.required])
-  public newPasswordControl: FormControl = new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(20)])
-  public repeatNewPasswordControl: FormControl = new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(20), matchValidator(this.newPasswordControl)])
+  public passwordControl: UntypedFormControl = new UntypedFormControl('', [Validators.required])
+  public newPasswordControl: UntypedFormControl = new UntypedFormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(40)])
+  public repeatNewPasswordControl: UntypedFormControl = new UntypedFormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(40), matchValidator(this.newPasswordControl)])
   public error: any
   public confirmation: any
 
@@ -34,6 +34,9 @@ export class ChangePasswordComponent {
   }
 
   changePassword () {
+    if (localStorage.getItem('email')?.match(/support@.*/) && !this.newPasswordControl.value.match(/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{12,30}/)) {
+      console.error('Parola echipei de asistență nu respectă politica corporativă pentru conturile privilegiate! Vă rugăm să schimbați parola în consecință!')
+    }
     this.userService.changePassword({
       current: this.passwordControl.value,
       new: this.newPasswordControl.value,
@@ -56,17 +59,12 @@ export class ChangePasswordComponent {
 
   resetForm () {
     this.passwordControl.setValue('')
-    this.passwordControl.markAsPristine()
-    this.passwordControl.markAsUntouched()
-    this.newPasswordControl.setValue('')
-    this.newPasswordControl.markAsPristine()
-    this.newPasswordControl.markAsUntouched()
-    this.repeatNewPasswordControl.setValue('')
-    this.repeatNewPasswordControl.markAsPristine()
-    this.repeatNewPasswordControl.markAsUntouched()
+    this.resetPasswords()
   }
 
   resetPasswords () {
+    this.passwordControl.markAsPristine()
+    this.passwordControl.markAsUntouched()
     this.newPasswordControl.setValue('')
     this.newPasswordControl.markAsPristine()
     this.newPasswordControl.markAsUntouched()
@@ -77,7 +75,7 @@ export class ChangePasswordComponent {
 }
 
 function matchValidator (newPasswordControl: AbstractControl) {
-  return function matchOtherValidate (repeatNewPasswordControl: FormControl) {
+  return function matchOtherValidate (repeatNewPasswordControl: UntypedFormControl) {
     const password = newPasswordControl.value
     const passwordRepeat = repeatNewPasswordControl.value
     if (password !== passwordRepeat) {

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2021 Bjoern Kimminich.
+ * Copyright (c) 2014-2023 Bjoern Kimminich & the OWASP Juice Shop contributors.
  * SPDX-License-Identifier: MIT
  */
 
@@ -34,6 +34,7 @@ interface Config {
       slackUrl: string
       redditUrl: string
       pressKitUrl: string
+      nftUrl: string
       questionnaireUrl: string
     }
     recyclePage: {
@@ -77,9 +78,11 @@ interface Config {
     showSolvedNotifications: boolean
     showHints: boolean
     showMitigations: boolean
+    codingChallengesEnabled: string
     restrictToTutorialsFirst: boolean
     safetyOverride: boolean
     overwriteUrlForProductTamperingChallenge: string
+    showFeedbackButtons: boolean
   }
   hackingInstructor: {
     isEnabled: boolean
@@ -96,7 +99,7 @@ interface Config {
 
 @Injectable({
   providedIn: 'root'
-})
+  })
 export class ConfigurationService {
   private readonly hostServer = environment.hostServer
   private readonly host = this.hostServer + '/rest/admin'

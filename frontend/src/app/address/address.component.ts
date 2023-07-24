@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2021 Bjoern Kimminich.
+ * Copyright (c) 2014-2023 Bjoern Kimminich & the OWASP Juice Shop contributors.
  * SPDX-License-Identifier: MIT
  */
 
@@ -20,7 +20,7 @@ dom.watch()
   selector: 'app-address',
   templateUrl: './address.component.html',
   styleUrls: ['./address.component.scss']
-})
+  })
 export class AddressComponent implements OnInit {
   @Output() emitSelection = new EventEmitter()
   @Input('allowEdit') public allowEdit: Boolean = false

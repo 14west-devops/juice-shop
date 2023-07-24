@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2021 Bjoern Kimminich.
+ * Copyright (c) 2014-2023 Bjoern Kimminich & the OWASP Juice Shop contributors.
  * SPDX-License-Identifier: MIT
  */
 
@@ -10,7 +10,7 @@ import { catchError } from 'rxjs/operators'
 
 @Injectable({
   providedIn: 'root'
-})
+  })
 
 export class DataSubjectService {
   private readonly hostServer = environment.hostServer
@@ -19,7 +19,7 @@ export class DataSubjectService {
   constructor (private readonly http: HttpClient) { }
 
   erase (params: any) {
-    return this.http.post(this.host + '/erasure-request', params).pipe(catchError(error => { throw error })
+    return this.http.post(this.host + '/erasure-request', params).pipe(catchError((error: Error) => { throw error })
     )
   }
 

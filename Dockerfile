@@ -1,7 +1,8 @@
 FROM quay.io/14west/node:12 as installer
 COPY . /juice-shop
 WORKDIR /juice-shop
-RUN npm install --production --unsafe-perm
+RUN npm i -g typescript ts-node
+RUN npm install --omit=dev --unsafe-perm
 RUN npm dedupe
 RUN rm -rf frontend/node_modules
 RUN npm rebuild
@@ -16,19 +17,13 @@ LABEL maintainer="Bjoern Kimminich <bjoern.kimminich@owasp.org>" \
     org.opencontainers.image.vendor="Open Web Application Security Project" \
     org.opencontainers.image.documentation="https://help.owasp-juice.shop" \
     org.opencontainers.image.licenses="MIT" \
-    org.opencontainers.image.version="12.6.1" \
+    org.opencontainers.image.version="15.0.0" \
     org.opencontainers.image.url="https://owasp-juice.shop" \
-    org.opencontainers.image.source="https://github.com/bkimminich/juice-shop" \
+    org.opencontainers.image.source="https://github.com/juice-shop/juice-shop" \
     org.opencontainers.image.revision=$VCS_REF \
     org.opencontainers.image.created=$BUILD_DATE
 WORKDIR /juice-shop
-RUN addgroup --system --gid 1001 juicer && \
-    adduser juicer --system --uid 1001 --ingroup juicer
-COPY --from=installer --chown=juicer /juice-shop .
-RUN mkdir logs && \
-    chown -R juicer logs && \
-    chgrp -R 0 ftp/ frontend/dist/ logs/ data/ i18n/ && \
-    chmod -R g=u ftp/ frontend/dist/ logs/ data/ i18n/
-USER 1001
+COPY --from=installer --chown=65532:0 /juice-shop .
+USER 65532
 EXPOSE 3000
-CMD ["npm", "start"]
+CMD ["/juice-shop/build/app.js"]

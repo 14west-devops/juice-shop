@@ -1,17 +1,17 @@
 /*
- * Copyright (c) 2014-2021 Bjoern Kimminich.
+ * Copyright (c) 2014-2023 Bjoern Kimminich & the OWASP Juice Shop contributors.
  * SPDX-License-Identifier: MIT
  */
 
 import { ChatbotService } from '../Services/chatbot.service'
 import { UserService } from '../Services/user.service'
 import { Component, OnInit } from '@angular/core'
-import { FormControl } from '@angular/forms'
+import { UntypedFormControl } from '@angular/forms'
 import { dom, library } from '@fortawesome/fontawesome-svg-core'
 import { faBomb } from '@fortawesome/free-solid-svg-icons'
 import { FormSubmitService } from '../Services/form-submit.service'
 import { TranslateService } from '@ngx-translate/core'
-import { CookieService } from 'ngx-cookie-service'
+import { CookieService } from 'ngx-cookie'
 
 library.add(faBomb)
 dom.watch()
@@ -35,9 +35,9 @@ interface MessageActions {
   selector: 'app-chatbot',
   templateUrl: './chatbot.component.html',
   styleUrls: ['./chatbot.component.scss']
-})
+  })
 export class ChatbotComponent implements OnInit {
-  public messageControl: FormControl = new FormControl()
+  public messageControl: UntypedFormControl = new UntypedFormControl()
   public messages: ChatMessage[] = []
   public juicyImageSrc: string = 'assets/public/images/ChatbotAvatar.png'
   public profileImageSrc: string = 'assets/public/images/uploads/default.svg'
@@ -78,7 +78,7 @@ export class ChatbotComponent implements OnInit {
       localStorage.setItem('token', response.token)
       const expires = new Date()
       expires.setHours(expires.getHours() + 8)
-      this.cookieService.set('token', response.token, expires, '/')
+      this.cookieService.put('token', response.token, { expires })
     }
   }
 

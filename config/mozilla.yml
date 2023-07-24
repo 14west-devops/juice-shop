@@ -18,6 +18,7 @@ application:
     slackUrl: null
     redditUrl: null
     pressKitUrl: 'https://blog.mozilla.org/press/kits'
+    nftUrl: null
     questionnaireUrl: null
   recyclePage:
     topProductImage: Gear-200155340.jpg
@@ -38,7 +39,9 @@ application:
     encryption: ~
 challenges:
   showHints: false
+  codingChallengesEnabled: never
   xssBonusPayload: '<iframe width="560" height="315" src="https://www.youtube.com/embed/0u9g0LhRkGk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>'
+  showFeedbackButtons: false
 hackingInstructor:
   isEnabled: false
 products:
@@ -175,6 +178,8 @@ products:
     price: 99.99
     image: 3d_keychain.jpg
     fileForRetrieveBlueprintChallenge: 'https://github.com/mozilla/ctf-austin/raw/master/app/public/images/products/3d_keychain.stl'
+    exifForBlueprintChallenge:
+      - ~
   -
     name: 'Global OWASP WASPY Award 2017 Nomination'
     description: 'Your chance to nominate up to three quiet pillars of the OWASP community ends 2017-06-30! <a href="https://www.owasp.org/index.php/WASPY_Awards_2017">Nominate now!</a>'

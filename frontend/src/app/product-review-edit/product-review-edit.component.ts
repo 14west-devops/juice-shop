@@ -1,11 +1,11 @@
 /*
- * Copyright (c) 2014-2021 Bjoern Kimminich.
+ * Copyright (c) 2014-2023 Bjoern Kimminich & the OWASP Juice Shop contributors.
  * SPDX-License-Identifier: MIT
  */
 
 import { Component, Inject, OnInit } from '@angular/core'
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog'
-import { FormControl, Validators } from '@angular/forms'
+import { UntypedFormControl, Validators } from '@angular/forms'
 import { ProductReviewService } from '../Services/product-review.service'
 import { MatSnackBar } from '@angular/material/snack-bar'
 
@@ -21,9 +21,9 @@ dom.watch()
   selector: 'app-product-review-edit',
   templateUrl: './product-review-edit.component.html',
   styleUrls: ['./product-review-edit.component.scss']
-})
+  })
 export class ProductReviewEditComponent implements OnInit {
-  public editReviewControl: FormControl = new FormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(160)])
+  public editReviewControl: UntypedFormControl = new UntypedFormControl('', [Validators.required, Validators.minLength(1), Validators.maxLength(160)])
   public error: string | null = null
 
   constructor (@Inject(MAT_DIALOG_DATA) public data: { reviewData: Review }, private readonly productReviewService: ProductReviewService, private readonly dialogRef: MatDialogRef<ProductReviewEditComponent>,

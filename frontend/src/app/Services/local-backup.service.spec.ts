@@ -1,12 +1,12 @@
 /*
- * Copyright (c) 2014-2021 Bjoern Kimminich.
+ * Copyright (c) 2014-2023 Bjoern Kimminich & the OWASP Juice Shop contributors.
  * SPDX-License-Identifier: MIT
  */
 
 import { inject, TestBed, waitForAsync } from '@angular/core/testing'
 
 import { LocalBackupService } from './local-backup.service'
-import { CookieService } from 'ngx-cookie-service'
+import { CookieModule, CookieService } from 'ngx-cookie'
 import { TranslateFakeLoader, TranslateLoader, TranslateModule } from '@ngx-translate/core'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
@@ -21,10 +21,11 @@ describe('LocalBackupService', () => {
   beforeEach(() => {
     snackBar = jasmine.createSpyObj('MatSnackBar', ['open'])
     snackBar.open.and.returnValue(null)
-    challengeService = jasmine.createSpyObj('ChallengeService', ['restoreProgress'])
+    challengeService = jasmine.createSpyObj('ChallengeService', ['restoreProgress', 'continueCode', 'continueCodeFindIt', 'continueCodeFixIt'])
 
     TestBed.configureTestingModule({
       imports: [
+        CookieModule.forRoot(),
         TranslateModule.forRoot({
           loader: {
             provide: TranslateLoader,
@@ -50,7 +51,7 @@ describe('LocalBackupService', () => {
   it('should save language to file', inject([LocalBackupService], (service: LocalBackupService) => {
     spyOn(FileSaver, 'saveAs').and.stub()
 
-    cookieService.set('language', 'de')
+    cookieService.put('language', 'de')
     service.save()
 
     const blob = new Blob([JSON.stringify({ version: 1, language: 'de' })], { type: 'text/plain;charset=utf-8' })
@@ -58,7 +59,7 @@ describe('LocalBackupService', () => {
   }))
 
   it('should restore language from backup file', waitForAsync(inject([LocalBackupService], (service: LocalBackupService) => {
-    cookieService.set('language', 'de')
+    cookieService.put('language', 'de')
     service.restore(new File(['{ "version": 1, "language": "cn" }'], 'test.json')).subscribe(() => {
       expect(cookieService.get('language')).toBe('cn')
       expect(snackBar.open).toHaveBeenCalled()
@@ -66,7 +67,7 @@ describe('LocalBackupService', () => {
   })))
 
   it('should not restore language from an outdated backup version', waitForAsync(inject([LocalBackupService], (service: LocalBackupService) => {
-    cookieService.set('language', 'de')
+    cookieService.put('language', 'de')
     service.restore(new File(['{ "version": 0, "language": "cn" }'], 'test.json')).subscribe(() => {
       expect(cookieService.get('language')).toBe('de')
       expect(snackBar.open).toHaveBeenCalled()

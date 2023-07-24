@@ -1,18 +1,18 @@
 /*
- * Copyright (c) 2014-2021 Bjoern Kimminich.
+ * Copyright (c) 2014-2023 Bjoern Kimminich & the OWASP Juice Shop contributors.
  * SPDX-License-Identifier: MIT
  */
 
 import { Component, OnInit } from '@angular/core'
 import { ConfigurationService } from '../Services/configuration.service'
 import { MatDialogRef } from '@angular/material/dialog'
-import { CookieService } from 'ngx-cookie-service'
+import { CookieService } from 'ngx-cookie'
 
 @Component({
   selector: 'app-welcome-banner',
   templateUrl: 'welcome-banner.component.html',
   styleUrls: ['./welcome-banner.component.scss']
-})
+  })
 export class WelcomeBannerComponent implements OnInit {
   public title: string = 'Welcome to OWASP Juice Shop'
   public message: string = "<p>Being a web application with a vast number of intended security vulnerabilities, the <strong>OWASP Juice Shop</strong> is supposed to be the opposite of a best practice or template application for web developers: It is an awareness, training, demonstration and exercise tool for security risks in modern web applications. The <strong>OWASP Juice Shop</strong> is an open-source project hosted by the non-profit <a href='https://owasp.org' target='_blank'>Open Web Application Security Project (OWASP)</a> and is developed and maintained by volunteers. Check out the link below for more information and documentation on the project.</p><h1><a href='https://owasp-juice.shop' target='_blank'>https://owasp-juice.shop</a></h1>"
@@ -32,9 +32,9 @@ export class WelcomeBannerComponent implements OnInit {
         this.title = config.application.welcomeBanner.title
         this.message = config.application.welcomeBanner.message
       }
-      this.showHackingInstructor = config.hackingInstructor?.isEnabled
+      this.showHackingInstructor = config?.hackingInstructor?.isEnabled
       // Don't allow to skip the tutorials when restrictToTutorialsFirst and showHackingInstructor are enabled
-      if (this.showHackingInstructor && config.challenges?.restrictToTutorialsFirst) {
+      if (this.showHackingInstructor && config?.challenges?.restrictToTutorialsFirst) {
         this.dialogRef.disableClose = true
         this.showDismissBtn = false
       }
@@ -53,6 +53,6 @@ export class WelcomeBannerComponent implements OnInit {
     this.dialogRef.close()
     const expires = new Date()
     expires.setFullYear(expires.getFullYear() + 1)
-    this.cookieService.set(this.welcomeBannerStatusCookieKey, 'dismiss', expires, '/')
+    this.cookieService.put(this.welcomeBannerStatusCookieKey, 'dismiss', { expires })
   }
 }

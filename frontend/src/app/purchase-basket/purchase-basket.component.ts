@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2021 Bjoern Kimminich.
+ * Copyright (c) 2014-2023 Bjoern Kimminich & the OWASP Juice Shop contributors.
  * SPDX-License-Identifier: MIT
  */
 
@@ -19,7 +19,7 @@ dom.watch()
   selector: 'app-purchase-basket',
   templateUrl: './purchase-basket.component.html',
   styleUrls: ['./purchase-basket.component.scss']
-})
+  })
 export class PurchaseBasketComponent implements OnInit {
   @Input('allowEdit') public allowEdit: boolean = false
   @Input('displayTotal') public displayTotal: boolean = false
@@ -48,7 +48,7 @@ export class PurchaseBasketComponent implements OnInit {
   load () {
     this.basketService.find(parseInt(sessionStorage.getItem('bid'), 10)).subscribe((basket) => {
       if (this.isDeluxe()) {
-        basket.Products.map(product => {
+        basket.Products.forEach(product => {
           product.price = product.deluxePrice
         })
       }
